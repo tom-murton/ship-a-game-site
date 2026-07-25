@@ -21,10 +21,12 @@ function or public submission list. Read submissions in the Netlify dashboard un
 
 ## Deployment
 
-The public GitHub repository is connected directly to Netlify. Pushes to `main` deploy
-production; pull requests receive deploy previews.
+The public GitHub repository is connected to Netlify through a repository-scoped,
+read-only deploy key and a GitHub push webhook. Pushes to `main` deploy production;
+pull requests receive deploy previews. The Netlify GitHub App is not required.
 
 - Netlify project: `ship-a-game`
+- Netlify project ID: `a37e7c95-c0b4-4369-aa9f-823f0cd1a85f`
 - Production domain: `https://shipagame.weevolve.app`
 - DNS provider: Namecheap
 
