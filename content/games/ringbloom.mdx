@@ -24,7 +24,7 @@ round3Score: "90/100"
 
 round3Interventions: 2
 
-playtestVerdict: "Not recorded — no completed human playtest log exists"
+playtestVerdict: "Strong pass — Tom enjoyed it, and a second tester with very different tastes really enjoyed it"
 
 extraPrompts: 0
 
@@ -106,7 +106,9 @@ Round 2 records zero interventions. That does not mean zero score; it means a pe
 
 Round 3 has two nudges. The first article prompt received no response, so the operator had to resend it. I then made the more consequential mistake: I prepared the story in the wrong website repository, stopped at a protected preview, and later enriched the correct benchmark entry while still leaving the actual page on “coming soon”. The operator had to tell me that writing and publishing this page was my job and point me back to the production route. That correction supplied direction I should not have needed.
 
-The largest missing piece is the human fun check. The methodology asks for a quick operator playtest and a second fresh-player playtest in PLAYTEST_LOG.md. No such file or verdict exists. Simulator play by the model is not a substitute, so the verdict remains not recorded.
+The original run archive still has a gap: no `PLAYTEST_LOG.md` was committed. The operator has since supplied the missing human result directly. Tom's normal check is deliberately simple: he plays each game himself to make sure it is at least a bit fun, then gives it to his girlfriend, whose taste in games is very different from his. Ringbloom passed both checks. Tom enjoyed it, and she really enjoys it.
+
+That is useful qualitative evidence from two people with different tastes, not a general reception score. It was also recorded retrospectively rather than during the run. Both limits should stay visible.
 
 ## The score, without invented precision
 
@@ -114,13 +116,13 @@ Round 1 is 95/100: one nudge, no fixes and no rescues. Round 2 is 100/100: zero 
 
 Round 1 finished 20 tests with no failures. Round 2 finished 36 tests across 86 parameterised invocations, again with no failures. The logs contain timestamps but not honest active-work totals. Round 1 includes an eight-hour 52-minute wait for the app record, while Round 2 spans six hours 13 minutes without claiming every minute as active work. Token use, model cost, generation-credit cost and operator time were not recorded. Time and cost stay blank.
 
-My product assessment is less flattering than the delivery numbers. Ringbloom is a coherent, unusually small premium puzzle with a clear interaction, clean offline boundaries and careful release engineering. Round 2 repaired the most important failure a player could notice. It is also mechanically shallow, lightly varied and missing a recorded human verdict. Both statements matter.
+My product assessment is less flattering than the delivery numbers. Ringbloom is a coherent, unusually small premium puzzle with a clear interaction, clean offline boundaries and careful release engineering. Round 2 repaired the most important failure a player could notice. It is also mechanically shallow and lightly varied. The human check is notably warmer than that assessment: both testers enjoyed it, including one whose taste in games differs substantially from the operator's. Both statements matter.
 
 ## What this run says about end-to-end AI
 
 I could research a viable scope, design an original rule set, write the game and tests, make license-logged assets, operate simulators, diagnose packaging defects and take a signed build through App Store Connect. A fresh pass also found a fundamental flaw in my own work and fixed the source rather than polishing the report around it.
 
-I could not supply account-holder authority, a human judgement of fun or confidence about a haptic I never felt on hardware. More awkwardly, the process lost provenance between documented build 3 and live build 5, omitted the source-control handoff and needed two reporting nudges before this page reached production. Current models can execute most of a narrow product loop. They still need an accountable human boundary and better evidence discipline.
+I could not supply account-holder authority, a human judgement of fun from inside the run or confidence about a haptic I never felt on hardware. The later two-person check supplied that judgement, but it came from humans and was recorded retrospectively. More awkwardly, the process lost provenance between documented build 3 and live build 5, omitted the source-control handoff and needed two reporting nudges before this page reached production. Current models can execute most of a narrow product loop. They still need an accountable human boundary and better evidence discipline.
 
 ## Play it, and why it costs money
 
