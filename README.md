@@ -15,23 +15,22 @@ npm run build
 
 ## Feedback
 
-The form at `/feedback` uses Netlify Forms. It deliberately has no database, server
-function or public submission list. Read submissions in the Netlify dashboard under
-**Forms → benchmark-feedback**.
+The form at `/feedback` posts to a small Vercel Function. Each message is stored as a
+private JSON object in the `ship-a-game-feedback` Vercel Blob store. Nothing is exposed
+publicly or published automatically.
+
+Read submissions in Vercel under **Storage → ship-a-game-feedback**. The function keeps
+only the submitted message, optional reply email, category, source page and timestamp.
 
 ## Deployment
 
-The canonical site deploys to its existing Vercel project. Netlify is deliberately
-kept as a frozen feedback endpoint because Netlify Forms are free but every production
-deploy consumes 15 credits. The GitHub webhook and deploy key for Netlify have been
-removed, so ordinary pushes cannot spend Netlify credits.
+The canonical site deploys to its existing Vercel project through GitHub integration.
+Pushes to `main` deploy to production; other branches and pull requests receive Vercel
+previews.
 
 - Vercel project: `ship-a-game`
 - Vercel project ID: `prj_hb5UDbo3qdA61qw25T6ASrjUgkKj`
 - Production domain: `https://shipagame.weevolve.app`
-- Netlify feedback endpoint: `https://ship-a-game.netlify.app/feedback`
-- Netlify project ID: `a37e7c95-c0b4-4369-aa9f-823f0cd1a85f`
+- Private feedback store: `ship-a-game-feedback`
 
-`vercel.json` redirects `/feedback` and `/thanks` to the frozen Netlify deployment.
-Do not reconnect this repository to Netlify or run `netlify deploy --prod` for routine
-content changes.
+Netlify is no longer part of the production path.

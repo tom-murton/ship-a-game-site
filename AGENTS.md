@@ -36,12 +36,12 @@ navigation, reduced motion, contrast and image alt text.
 
 The canonical site deploys to Vercel project `ship-a-game`
 (`prj_hb5UDbo3qdA61qw25T6ASrjUgkKj`) and the domain is
-`shipagame.weevolve.app`. Netlify project
-`a37e7c95-c0b4-4369-aa9f-823f0cd1a85f` is a frozen feedback endpoint only.
-Its GitHub webhook and deploy key are intentionally removed because every Netlify
-production deploy consumes 15 credits. `vercel.json` redirects `/feedback` and
-`/thanks` to that frozen deployment.
+`shipagame.weevolve.app`. GitHub `main` is the production branch.
 
-Do not reconnect this repository to Netlify or run a Netlify production deploy for
-routine content changes. Do not reintroduce Vercel Functions, Neon or another database
-for feedback.
+Feedback posts to `api/feedback.js`, a small Vercel Function, and is stored as private
+JSON in the `ship-a-game-feedback` Vercel Blob store. Keep submissions private, collect
+only the existing form fields and never expose the Blob token to the browser. Read
+submissions from the Vercel Storage dashboard.
+
+Netlify is not part of the production path. Do not reconnect this repository to
+Netlify or run a Netlify deployment.

@@ -20,11 +20,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         id="feedback-form"
         name="benchmark-feedback"
         method="POST"
-        action="/thanks"
-        data-netlify="true"
-        netlify-honeypot="website"
+        action="/api/feedback"
       >
-        <input type="hidden" name="form-name" value="benchmark-feedback" />
         <div class="form-field">
           <label for="kind">What is this about?</label>
           <select id="kind" name="kind">
@@ -55,6 +52,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <input id="pagePath" name="pagePath" type="hidden" />
 
         <button class="button primary feedback-submit" type="submit">Send feedback <span aria-hidden="true">↗</span></button>
+        <p id="form-status" class="form-status" role="alert" hidden></p>
       </form>
     </div>
   </section>
@@ -65,6 +63,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   const message = document.querySelector<HTMLTextAreaElement>('#message');
   const counter = document.querySelector<HTMLElement>('#message-count');
   const pagePath = document.querySelector<HTMLInputElement>('#pagePath');
+  const formStatus = document.querySelector<HTMLElement>('#form-status');
+  const error = new URLSearchParams(window.location.search).get('error');
+
+  if (formStatus && error) {
+    formStatus.textContent = error === 'invalid'
+      ? 'Please check the form and try again.'
+      : 'Your feedback could not be saved. Please try again.';
+    formStatus.hidden = false;
+  }
 
   if (pagePath) {
     try {

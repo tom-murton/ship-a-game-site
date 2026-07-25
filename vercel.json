@@ -1,14 +1,8 @@
 {
-  "redirects": [
-    {
-      "source": "/feedback",
-      "destination": "https://ship-a-game.netlify.app/feedback",
-      "permanent": false
-    },
-    {
-      "source": "/thanks",
-      "destination": "https://ship-a-game.netlify.app/thanks",
-      "permanent": false
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/feedback.js": {
+      "maxDuration": 10
     }
-  ]
+  }
 }
