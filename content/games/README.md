@@ -9,7 +9,7 @@ Each completed benchmark run becomes one Markdown or MDX file in this folder. Th
 1. Add a URL-safe MDX file such as `ringbloom.mdx`.
 2. Fill every required field from the completed run logs and the live App Store record.
 3. Put the app icon and screenshots in `public/images/games/<game-slug>/`.
-4. Write the first-person report from the primary run evidence: reports, decision logs, intervention logs, critique, screenshots and App Store record.
+4. Write the reader-facing case study from the primary run evidence: reports, decision logs, intervention logs, critique, screenshots and App Store record. Keep the main article between 600 and 900 words, with no more than four sections. Put detailed scores, intervention rows, test evidence and limitations in a collapsed `<details className="report-appendix">` appendix at the bottom.
 5. Run `npm run build` to validate the content and generate the page.
 
 Required frontmatter:

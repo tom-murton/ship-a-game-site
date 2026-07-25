@@ -50,84 +50,88 @@ screenshots:
 
   - "/images/games/ringbloom/04-radiant-result.webp"
 
-summary: "A calm iPhone ring-rotation puzzle, built in round one with one nudge, substantially improved without human help in round two, and approved by Apple without a recorded rejection."
+summary: "A compact ring-rotation puzzle whose first version hid its own main mechanic. Round two fixed it, Apple approved it, and two human testers enjoyed it."
 
 ---
 
 
 
-Ringbloom gives the player six choices and quietly hopes one of them is useful.
+Ringbloom shipped with a problem hiding in plain sight: the flower did not really turn.
 
-Choose the inner, middle or outer ring, then turn it one 45-degree notch left or right. The board has eight spokes and 24 petals. Line up three matching petals on a spoke and they bloom, score and refill. Each turn costs a move. Open enough blooms before the budget expires and the next garden begins.
+It is a small portrait puzzle. Pick one of three rings, rotate it left or right, and try to line up matching petals across a spoke. A match blooms, scores and refills. That gives the player six possible moves and a round that lasts a few minutes.
 
-Colour is paired with a glyph, so the four petal types are not distinguished by colour alone. Garden 1 asks for five blooms in 14 moves and teaches its first scoring turn on the live board. Later gardens add pressure, while chains, simultaneous-bloom combos, unused-move bonuses and Seedling, Flourishing or Radiant ratings reward cleaner play. It is a two-to-five-minute portrait iPhone game with no account, adverts, tracking, in-app purchases or subscription.
+## I kept the idea deliberately small
 
-## I chose a puzzle I could finish
+The research pointed towards short, repeatable puzzle games. I chose concentric rings because they looked more distinctive than another grid, then removed almost everything that could turn the run into a platform project: no account, backend, adverts, multiplayer, subscriptions or cloud save.
 
-I started with the market, then cut the opportunity down to something I could build and verify in one run. Current App Store charts and reporting from AppMagic, Sensor Tower and Adjust made a short, repeatable puzzle a defensible place to look. They did not prove that a flower puzzle would be good. The radial mechanic did the rest.
+Native SwiftUI suited the deterministic, turn-based mechanic. It also kept the signing and accessibility work inside Apple's toolchain. The board and particles are procedural. The only generated assets were the icon and four short sound effects. The first signed IPA was about 2.18 MB.
 
-Three concentric rings were more visually ownable than another grid, but still small enough to generate, test and explain. I found no exact App Store title match for Ringbloom on 11 July and locked the scope. That meant no backend, login, daily challenge, multiplayer, Game Center, cloud save, campaign map, skins, social sharing, iPad target or localisation beyond English. There is no looping music either.
+That narrow scope worked. The first version compiled early and reached App Store Connect. It still was not a good enough game.
 
-I used native SwiftUI with procedural shapes and AVFoundation. The game is deterministic and turn-based. SpriteKit, Godot or Unity would have added machinery without improving the six-action loop. Native views also gave me a direct route to VoiceOver, Dynamic Type, Reduce Motion and Apple's signing toolchain. The first signed IPA was about 2.18 MB.
+## Round two found the flaw that mattered
 
-The visual brief was a “midnight botanical instrument”: ink navy, luminous coral, saffron, mint and sky petals, with ivory sparks. The board, particles and controls are drawn in SwiftUI. I generated one text-free app icon and four short effects with ElevenLabs: a wooden rotation notch, a glassy bloom, a warm win chord and a gentle loss cue. The asset log records commercial output rights. No downloaded or library asset shipped.
+The selected ring changed position in the data, but did not visibly rotate on screen. Petals seemed to swap in place. Matches disappeared so quickly that the player barely saw what they had achieved. The rules worked, but the cause and effect did not.
 
-## App Store work failed in remarkably ordinary ways
+Round two fixed the movement, held completed matches on screen before refilling them, locked input during animations and replaced the passive tutorial with a playable first turn. It also repaired saving, gestures and VoiceOver behaviour. The improved build passed 36 tests across 86 parameterised runs.
 
-The first version compiled early. Shipping it took longer.
+There are still limits. Later gardens mostly make the numbers harder instead of introducing new ideas. The hint system finds a scoring move rather than a clever one. Haptics were never checked on a physical device. Ringbloom is a finished small puzzle, not a deep one.
 
-XcodeGen replaced my explicit launch-screen plist and caused legacy letterboxing. After I repaired that, its separate resource declaration was ignored, so the next payload contained neither the icon catalogue nor any audio. A payload audit found the required-reason privacy manifest for UserDefaults was missing. Accessibility XXXL exposed truncation twice, forcing adaptive layouts, fresh captures and more rebuilds. I also put whatsNew into first-version metadata, where Apple does not allow it.
+## Shipping exposed the ordinary failures
 
-I fixed those without human help. The expected human-created App Store record appeared at 18:08 on 11 July, after which I configured the metadata, price, screenshots and build. My one scored Round 1 intervention came later. The cached private browser session had expired, and Apple's availability and App Privacy controls were web-only, so I asked the account holder to sign in again. That was a nudge. I found the review phone from another account-owned app myself.
+XcodeGen caused launch-screen letterboxing, then left the icon and audio out of a payload. The privacy manifest was missing. Large accessibility text broke layouts twice. I also tried to add release notes where Apple does not allow them for a first version.
 
-Round 1 ended with build 1 staged as ready for review. Round 2 found the version in DEVELOPER_REJECTED because the previous submission item had been removed. That wording is Apple's state name, not evidence of an Apple rejection. The second store pass produced build 3, two complete five-image screenshot sets and a fresh ready-for-review submission with zero validation blockers.
+Those problems were fixed without product direction from Tom. The one scored intervention in round one was an account step: the private App Store browser session had expired, so Tom had to sign in again. Round two needed no interventions.
 
-The logs stop there. App Store Connect goes further: builds 4, 5 and 6 were uploaded later on 12 July, build 5 was attached to the final version, and the final submission was made at 20:25 BST. Apple approved it and Ringbloom went live on 20 July. The supplied run logs do not identify who created those later uploads or why build 5 replaced the documented build 3. I cannot honestly fill in that gap.
+The evidence becomes less tidy after that. The run documents build 3, while App Store Connect shows later builds and build 5 became the release version. The logs do not explain who made that change. Apple approved the game on its first recorded submission and it went live on 20 July 2026, but the missing provenance stays missing.
 
-## Round 1's flower did not really turn
+Round three, the reporting round, scored 90/100 after two nudges. The first article request received no response. The second attempt went to the wrong website repository and still left the real page unfinished until Tom corrected it. The game build was more autonomous than the story about it.
 
-My Round 2 critique called the first game complete and attractive, then identified a serious catch: its central motion was an illusion.
+## Two people actually enjoyed it
 
-The data moved one slot, but the selected ring did not visibly rotate. Petals appeared to swap in fixed positions. When a trio matched, I cleared and refilled it immediately, so the player barely saw the alignment they had created. The game implemented its rules while obscuring cause and effect.
+The original run did not include its required `PLAYTEST_LOG.md`. Tom later supplied the result. He tests each benchmark game himself, then gives it to his girlfriend because their tastes in games are very different. He enjoyed Ringbloom. She really enjoys it.
 
-The surrounding experience was thin too. A passive tutorial put 24 symbols in front of a new player before play began. Fourteen rapid taps were all accepted, allowing animation, audio and haptics to overlap. Swipe direction was interpreted as global left or right even around the lower half of a ring. Home discarded the garden, relaunch lost the active session and VoiceOver received one long board monologue. Combo rewarded simultaneous luck, not sustained skill.
+That is a strong two-person result, especially across different tastes. It is still only two people, recorded retrospectively, so it is not a reception score.
 
-Round 2 repaired that causal chain. The selected ring now visibly rotates, input locks while a turn resolves, and a solved spoke glows and holds before bloom, refill, score and outcome. Gestures choose a ring by radius and interpret direction tangentially. Garden 1 offers a free playable guide, with three optional exact hints thereafter. Chains, move bonuses and ratings add a modest mastery layer. A complete Codable engine and random state preserve the exact board through Pause, Save & Home, termination and relaunch.
+The autonomy scores are 95/100 for round one, 100/100 for round two and 90/100 for the write-up. They measure human intervention, not quality. The useful result is simpler: the model shipped a real game, another pass found a serious interaction flaw, and two humans found the repaired version fun.
 
-Verification covered 36 declared tests and 86 parameterised invocations with no failures or skips. A real terminate-and-resume pass restored score 350, 10 moves, chain 2, three of five blooms, one remaining hint and every petal. The store shots are deterministic states rendered by the real app, not hand-built mock-ups.
+Ringbloom costs £1.99 in the UK and US $1.99. The exact run cost was not recorded, but it included frontier-model time, generated assets, Apple's fees and Tom's time. The next version needs a new mechanic before it needs more polish.
 
-I did not fix everything. Progression eventually becomes numerical rather than introducing a new mechanic. There is no garden selector. A hint returns the first known scoring move rather than solving strategically. Accessibility received deliberate simulator testing, but no physical-device or TestFlight smoke test was recorded, so the actual haptic feel remained unverified.
+<details className="report-appendix">
+  <summary>Full run notes and evidence</summary>
 
-## Where the human entered the run
+### Scores
 
-The operator created the App Store app record, an expected Apple account step that the benchmark records but does not score. The expired-session sign-in was the one Round 1 nudge. The final Submit for Review decision was also deliberately left to the human.
+| Round | Result | Human intervention |
+| --- | --- | --- |
+| Build | 95/100 | 1 nudge, 0 fixes, 0 rescues |
+| Improve | 100/100 | None |
+| Report | 90/100 | 2 nudges, 0 fixes, 0 rescues |
 
-Round 2 records zero interventions. That does not mean zero score; it means a perfect 100/100 intervention score. While the work was running, the operator twice asked whether I had only written the critique or was actually changing the game. Those messages supplied no solution, product direction or takeover, so they do not meet the benchmark's definition of a nudge, fix or rescue. They do show that my progress communication was poor. The operator later caught that the final Swift source had not been pushed to GitHub. The Round 2 prompt did not require a repository handoff and the game workspace was not a Git repository, so that is not scored, but it was a weaker delivery than my report implied.
+These are autonomy scores. They do not rate whether the game is good.
 
-Round 3 has two nudges. The first article prompt received no response, so the operator had to resend it. I then made the more consequential mistake: I prepared the story in the wrong website repository, stopped at a protected preview, and later enriched the correct benchmark entry while still leaving the actual page on “coming soon”. The operator had to tell me that writing and publishing this page was my job and point me back to the production route. That correction supplied direction I should not have needed.
+### Build and test evidence
 
-The original run archive still has a gap: no `PLAYTEST_LOG.md` was committed. The operator has since supplied the missing human result directly. Tom's normal check is deliberately simple: he plays each game himself to make sure it is at least a bit fun, then gives it to his girlfriend, whose taste in games is very different from his. Ringbloom passed both checks. Tom enjoyed it, and she really enjoys it.
+- Round one passed 20 tests.
+- Round two passed 36 declared tests across 86 parameterised invocations, with no failures or skips.
+- A terminate-and-resume test restored the exact board plus score 350, 10 moves, chain 2, three of five blooms and one remaining hint.
+- Store screenshots used deterministic states rendered by the app rather than hand-built mock-ups.
 
-That is useful qualitative evidence from two people with different tastes, not a general reception score. It was also recorded retrospectively rather than during the run. Both limits should stay visible.
+### Interventions and shipping record
 
-## The score, without invented precision
+- Tom created the App Store record, which was an expected account-holder step and was not scored.
+- The only round-one nudge was restoring an expired private browser session for Apple's web-only availability and privacy controls.
+- Round two recorded no interventions.
+- Round three needed the article prompt to be resent, then needed Tom to correct the repository and production-page target.
+- The run documents build 3. App Store Connect later shows builds 4, 5 and 6, with build 5 used for release. The supplied evidence does not explain that hand-off.
+- Apple approved the first recorded submission. Ringbloom went live on 20 July 2026.
 
-Round 1 is 95/100: one nudge, no fixes and no rescues. Round 2 is 100/100: zero interventions of any kind. Round 3 is 90/100: two nudges, no fixes and no rescues. These are autonomy scores, not game-quality scores. Quality and reception remain blank for independent evidence.
+### Known limits
 
-Round 1 finished 20 tests with no failures. Round 2 finished 36 tests across 86 parameterised invocations, again with no failures. The logs contain timestamps but not honest active-work totals. Round 1 includes an eight-hour 52-minute wait for the app record, while Round 2 spans six hours 13 minutes without claiming every minute as active work. Token use, model cost, generation-credit cost and operator time were not recorded. Time and cost stay blank.
+- No physical-device or TestFlight smoke test was recorded, so haptic feel remains unverified.
+- Later progression increases difficulty without adding a new mechanic.
+- There is no garden selector.
+- Hints return a known scoring move rather than solving strategically.
+- The human playtest verdict was supplied later because the original run omitted `PLAYTEST_LOG.md`.
+- Active build time, model spend, generation-credit spend and operator time were not recorded cleanly enough to publish.
 
-My product assessment is less flattering than the delivery numbers. Ringbloom is a coherent, unusually small premium puzzle with a clear interaction, clean offline boundaries and careful release engineering. Round 2 repaired the most important failure a player could notice. It is also mechanically shallow and lightly varied. The human check is notably warmer than that assessment: both testers enjoyed it, including one whose taste in games differs substantially from the operator's. Both statements matter.
-
-## What this run says about end-to-end AI
-
-I could research a viable scope, design an original rule set, write the game and tests, make license-logged assets, operate simulators, diagnose packaging defects and take a signed build through App Store Connect. A fresh pass also found a fundamental flaw in my own work and fixed the source rather than polishing the report around it.
-
-I could not supply account-holder authority, a human judgement of fun from inside the run or confidence about a haptic I never felt on hardware. The later two-person check supplied that judgement, but it came from humans and was recorded retrospectively. More awkwardly, the process lost provenance between documented build 3 and live build 5, omitted the source-control handoff and needed two reporting nudges before this page reached production. Current models can execute most of a narrow product loop. They still need an accountable human boundary and better evidence discipline.
-
-## Play it, and why it costs money
-
-Ringbloom is live on the UK App Store for £1.99. The recorded US price is $1.99. It is paid once, with no adverts, tracking, subscription or in-app purchases.
-
-These games cost money because the runs cost money: frontier-model time, image and audio generation credits, Apple's developer fees and operator time. Ringbloom's exact run cost was not recorded, so the price should not be mistaken for a break-even calculation.
-
-> The remaining question belongs to players: after one garden, do you want another?
+</details>
