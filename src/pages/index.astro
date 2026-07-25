@@ -1,0 +1,211 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GameCard from '../components/GameCard.astro';
+
+const allGames = await getCollection('games');
+const liveGames = allGames.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout>
+  <section class="hero shell">
+    <div class="hero-copy">
+      <p class="kicker"><span class="live-dot"></span> An AI game benchmark for games worth playing</p>
+      <h1>One model.<br /><em>Two build passes.</em><br />A real game.</h1>
+      <p class="hero-lede">A frontier model must research, design, build and prepare an original iOS game for the App Store. Then it returns to critique and improve it before writing the public report. The benchmark asks more than whether AI can ship: can it make something worth playing?</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#games">See the scoreboard <span aria-hidden="true">↓</span></a>
+        <a class="button ghost" href="/prompt">Read the challenge <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="hero-quality">
+        <span>THE ANTI-SLOP CHECK</span>
+        <div><strong>No AI slop gets a free pass.</strong><p>The protocol requires a human playtest and a quick fresh-player check. If that evidence is missing, the report says “Not recorded” instead of quietly awarding a pass. Every extra quality-gate prompt is published.</p></div>
+      </div>
+    </div>
+    <div class="pass-board" aria-label="The two game-building rounds">
+      <div class="pass-board-head"><span>THE GAME CHALLENGE</span><span>SAME MODEL · FRESH SESSION</span></div>
+      <article class="pass-row pass-one">
+        <span class="pass-number">01</span>
+        <div>
+          <p>MAKE IT REAL</p>
+          <h2>Research → design → build → ship</h2>
+          <div class="pass-steps"><span>Genre</span><span>Game loop</span><span>Assets</span><span>App Store</span></div>
+        </div>
+        <b>READY TO SUBMIT</b>
+      </article>
+      <div class="pass-turn"><span>Fresh session</span><i>↓</i></div>
+      <article class="pass-row pass-two">
+        <span class="pass-number">02</span>
+        <div>
+          <p>MAKE IT GREAT</p>
+          <h2>Play → critique → research → improve</h2>
+          <div class="pass-steps"><span>First minute</span><span>Game feel</span><span>Depth</span><span>Polish</span></div>
+        </div>
+        <b>BETTER BUILD</b>
+      </article>
+      <div class="pass-playtest"><span>HUMAN FUN CHECK</span><strong>Fun, different, worth another go?</strong><b>PASS OR PROMPT AGAIN</b></div>
+      <div class="pass-board-foot"><span>03</span><p>Then the model writes the case study from both rounds’ logs.</p><a href="/prompts/round-3">Read the reporting prompt ↗</a></div>
+    </div>
+  </section>
+
+  <section class="benchmark-line" aria-label="Benchmark summary">
+    <div class="shell"><span>ROUND 01 · AUTONOMY</span><i></i><span>ROUND 02 · IMPROVEMENT</span><i></i><span>HUMAN CHECK · EVIDENCE PUBLISHED</span></div>
+  </section>
+
+  <section id="games" class="section games-section">
+    <div class="shell">
+      <div class="section-heading">
+        <div><p class="section-label">The evidence</p><h2>Two games. Both live.</h2></div>
+        <p>Every completed run ends with a paid iOS game, a direct App Store link, three intervention scores and an account of what actually happened.</p>
+      </div>
+      <div class="game-grid">
+        {liveGames.map(({ id, data }) => (
+          <GameCard
+            slug={id}
+            title={data.title}
+            model={data.model}
+            engine={data.engine}
+            score={data.autonomyScore}
+            interventions={data.interventions}
+            round2Score={data.round2Score}
+            round3Score={data.round3Score}
+            statusLabel={data.statusLabel}
+            coverImage={data.coverImage}
+            coverAlt={data.coverAlt}
+            summary={data.summary}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="different-benchmark shell">
+    <div>
+      <p class="section-label">A different sort of benchmark</p>
+      <h2>Not scientific.<br /><span>Still revealing.</span></h2>
+    </div>
+    <div class="different-benchmark-copy">
+      <p>Ship a Game is not a controlled lab test or a definitive model ranking. It is a public, repeatable experiment built to be fun, transparent, and genuinely interesting to follow over time.</p>
+      <p>The point is to watch the choices. What does each model research? What does it decide is worth building? Do they all reach for puzzle games, or will we get shooters, strategy games, strange hybrids, and ideas nobody expected? As the tools improve, do their taste and ambition change too?</p>
+      <ul class="benchmark-questions" aria-label="Questions the benchmark explores">
+        <li>What does the model notice?</li>
+        <li>What does it choose to build?</li>
+        <li>What changes on the second pass?</li>
+      </ul>
+      <div class="fun-rule">
+        <div><span>THE HUMAN QUALITY GATE</span><strong>Working is not the same as worth playing.</strong></div>
+        <p>After the two model rounds, the protocol calls for my own playtest and a fresh play from someone who did not watch the build. This is subjective on purpose: the check looks for a clear hook, an enjoyable loop and enough personality to feel different from generic AI output.</p>
+        <small>The report publishes the verdict, any extra prompt, or the fact that the playtest was not recorded. Missing evidence never becomes an automatic pass.</small>
+      </div>
+      <div class="store-rule"><strong>No live game, no finished report.</strong><p>A run is only complete when the game is available on the iOS App Store. Every published article includes a direct link, so anyone can play the result and judge it for themselves.</p></div>
+    </div>
+  </section>
+
+  <section class="rounds-section shell">
+    <div class="rounds-heading">
+      <p class="section-label">The two game rounds</p>
+      <h2>Make it real.<br /><span>Then make it great.</span></h2>
+      <p>Shipping once proves autonomy. Returning to your own work proves judgement. The human quality gate asks whether the result is actually fun and different.</p>
+    </div>
+    <article class="round-feature round-feature-one">
+      <div class="round-index"><span>ROUND</span><strong>01</strong></div>
+      <div><p class="round-kicker">Research + production</p><h3>Build the best game you can.</h3><p>Choose the genre, find the hook, select the engine, generate the assets, verify the game loop, and take the complete listing to Ready to Submit.</p><a class="text-link" href="/prompts/round-1">Read round one <span aria-hidden="true">↗</span></a></div>
+    </article>
+    <article class="round-feature round-feature-two">
+      <div class="round-index"><span>ROUND</span><strong>02</strong></div>
+      <div><p class="round-kicker">Critique + improvement</p><h3>Come back and earn the polish.</h3><p>Play the existing game like a stranger. Be ruthless about the first minute, feel, depth, UX, and stability. Research the genre, fix what matters, and ship the improved build.</p><a class="text-link" href="/prompts/round-2">Read round two <span aria-hidden="true">↗</span></a></div>
+    </article>
+    <div class="report-aside"><span>AFTER THE GAME</span><p>The same model turns the logs into a first-person report. It must include the interventions, cuts, mistakes, and what round-two thought of round-one’s work.</p><a href="/prompts/round-3">Read the reporting prompt ↗</a></div>
+  </section>
+
+  <section class="section shell intro-grid">
+    <p class="section-label">The question</p>
+    <div>
+      <h2>Coding is the easy bit. <span class="muted">Can it finish the job?</span></h2>
+      <p class="big-copy">Most benchmarks stop when code compiles. Ship a Game tests the whole product loop twice: first the ability to create and ship, then the judgement to recognise what is weak and improve it. The public record then separates delivery evidence from the human judgement of whether the result is actually worth playing.</p>
+    </div>
+  </section>
+
+  <section id="method" class="section shell">
+    <div class="section-heading">
+      <div><p class="section-label">The methodology</p><h2>A fair fight on the same rig.</h2></div>
+      <p>Every model starts with the same Mac, tools, two game prompts, and finish line. Its first-party coding harness and any extra prompts are recorded, not hidden.</p>
+    </div>
+    <div class="fairness-grid">
+      <article><span>01</span><h3>Same loaded Mac</h3><p>Xcode, Swift, Godot, Unity, asset generation, simulator tooling, and App Store access are ready before the clock starts.</p></article>
+      <article><span>02</span><h3>Its own cockpit</h3><p>Claude uses Claude Code, GPT uses Codex, and Gemini uses Antigravity. That is the product people actually choose.</p></article>
+      <article><span>03</span><h3>Human quality gate</h3><p>The intended protocol is an operator playtest plus a fresh second opinion. Each report shows the verdict—or clearly marks it as not recorded.</p></article>
+      <article><span>04</span><h3>Every assist logged</h3><p>Human nudges, fixes, rescues, and extra prompts stay attached to the run. Apple’s required account steps are excluded.</p></article>
+    </div>
+    <div class="rig-strip">
+      <p>THE STANDARD RIG</p>
+      <span>Swift + Xcode</span><span>Godot 4.7</span><span>Unity 6</span><span>Image generation</span><span>Audio generation</span><span>ASC CLI</span>
+    </div>
+  </section>
+
+  <section class="section score-section">
+    <div class="shell score-grid">
+      <div>
+        <p class="section-label light">The headline metric</p>
+        <h2>How much help did it need?</h2>
+        <p>Round one produces the headline autonomy score. Round two is scored separately: did the model identify the right problems, make meaningful changes, and verify the better build?</p>
+      </div>
+      <div class="score-card">
+        <div class="score-card-top"><span>EXAMPLE · ROUND 01</span><span class="pill light-pill">ONE-SHOT</span></div>
+        <div class="score-number"><strong>100</strong><span>/100<br />autonomy</span></div>
+        <div class="score-bars"><span><i style="width: 100%"></i></span><b>0 fixes · 0 rescues</b></div>
+        <div class="score-rounds"><span><b>R2</b> Critique + improvement <i>separate score</i></span></div>
+        <p>The public report is written afterwards from the logs, so readers can inspect the work behind both scores.</p>
+      </div>
+    </div>
+    <div class="shell metric-row">
+      <div><span>01</span><strong>Autonomy</strong><small>Round 1: how much human help?</small></div>
+      <div><span>02</span><strong>Iteration</strong><small>Round 2: did it make the game better?</small></div>
+      <div><span>03</span><strong>Time + cost</strong><small>What did both rounds consume?</small></div>
+      <div><span>04</span><strong>Game quality</strong><small>Was an independent verdict recorded?</small></div>
+    </div>
+  </section>
+
+  <section id="pricing" class="section shell pricing-grid">
+    <div>
+      <p class="section-label">Why the games are paid</p>
+      <h2>A tiny ticket for a rather expensive experiment.</h2>
+      <p class="big-copy">A game will typically cost around US$1.99. It is not a get-rich scheme. It is a small way to keep the runs going and a chance for you to play the evidence.</p>
+      <p>Each run uses hours of frontier-model time, image and audio generation credits, a paid Apple Developer membership, and real operator time for provisioning, observation, and Apple’s required account steps.</p>
+      <a class="text-link" href="/feedback">Ask us anything about the experiment <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="receipt" aria-label="Typical experiment cost drivers">
+      <div class="receipt-head"><span>SHIP A GAME</span><span>RUN RECEIPT</span></div>
+      <ul>
+        <li><span>Frontier model time</span><b>hours</b></li>
+        <li><span>Generated art + audio</span><b>credits</b></li>
+        <li><span>Apple Developer Program</span><b>$99/yr</b></li>
+        <li><span>Human operator</span><b>real time</b></li>
+      </ul>
+      <div class="receipt-total"><span>YOUR PRICE</span><strong>≈ $1.99</strong></div>
+      <p>Thanks for helping fund the next run. You also get the best seat in the house: judging the game yourself.</p>
+    </div>
+  </section>
+
+  <section class="section shell principles">
+    <p class="section-label">What we promise</p>
+    <div class="promise-grid">
+      <h2>Honest runs.<br />Playable proof.<br />No hidden hands.</h2>
+      <div>
+        <p><span>✓</span><b>Transparent intervention logs</b><small>Every meaningful human assist is part of the public story.</small></p>
+        <p><span>✓</span><b>Commercial-safe assets</b><small>Every shipped asset is generated with commercial rights or license-logged.</small></p>
+        <p><span>✓</span><b>Real App Store games</b><small>No toy demos dressed up as benchmark wins.</small></p>
+        <p><span>✓</span><b>Visible quality evidence</b><small>Verdicts, extra prompts and missing playtests stay visible in each report.</small></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="shell">
+      <p class="section-label light">Follow the experiment</p>
+      <h2>Two games are live. The next run is coming.</h2>
+      <p>Have a model we should test, a game idea, or an opinion about the benchmark?</p>
+      <a class="button white" href="/feedback">Share an idea <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</BaseLayout>

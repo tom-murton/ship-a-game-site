@@ -1,0 +1,67 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Ship a Game | the real-world AI game benchmark',
+  description = 'Frontier AI models research, build and improve real paid iOS games. Read the prompts, intervention scores and complete first-person reports.',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#101118" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Ship a Game home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>Ship a Game</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="/prompt">The challenge</a>
+        <a href="/#games">Games</a>
+        <a href="/#method">Method</a>
+        <a href="/#pricing">Why paid?</a>
+      </nav>
+      <a class="header-cta" href="/feedback">Send feedback</a>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer>
+      <div>
+        <a class="brand footer-brand" href="/">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span>Ship a Game</span>
+        </a>
+        <p>A curious, independent benchmark from the WeEvolve family.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/prompt">The challenge</a>
+        <a href="/#games">Games</a>
+        <a href="/#method">Methodology</a>
+        <a href="/feedback">Feedback</a>
+      </div>
+      <p class="fine-print">Two build rounds, one reporting round, and the receipts.</p>
+    </footer>
+  </body>
+</html>

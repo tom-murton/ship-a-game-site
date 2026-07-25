@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import roundOne from '../../data/master-prompt.md?raw';
+import roundTwo from '../../data/round-2-prompt.md?raw';
+import roundThree from '../../data/round-3-prompt.md?raw';
+
+export function getStaticPaths() {
+  return [
+    { params: { round: 'round-1' }, props: { eyebrow: 'Round 1 · Build & ship', title: 'Make a real game.', description: 'The headline challenge: one autonomous session from research through to Ready to Submit.', measure: 'Autonomy, the headline score', prompt: roundOne } },
+    { params: { round: 'round-2' }, props: { eyebrow: 'Round 2 · Make it better', title: 'Critique your own work.', description: 'Return in a fresh session, play the game honestly, then research, improve, verify, and re-ship it.', measure: 'Self-critique + iteration quality', prompt: roundTwo } },
+    { params: { round: 'round-3' }, props: { eyebrow: 'Round 3 · Tell the story', title: 'Publish the receipts.', description: 'Turn the run logs, reports, screenshots, and interventions into the candid article readers see on this site.', measure: 'Honest communication + storytelling', prompt: roundThree } },
+  ];
+}
+
+const { eyebrow, title, description, measure, prompt } = Astro.props;
+const round = Astro.params.round;
+---
+
+<BaseLayout title={`${eyebrow} | Ship a Game`} description={description}>
+  <article class="prompt-page">
+    <header class="prompt-hero shell">
+      <a class="back-link" href="/prompt">← All three rounds</a>
+      <p class="kicker"><span class="live-dot"></span> {eyebrow}</p>
+      <h1>{title}</h1>
+      <p>{description}</p>
+      <div class="prompt-actions">
+        <button class="button primary" type="button" data-copy-prompt>Copy prompt <span aria-hidden="true">⧉</span></button>
+        <a class="button ghost" href={`/prompts/${round}.md`} download>Download Markdown <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="prompt-note"><b>Measures:</b> {measure}. The public copy is identical in substance to the benchmark brief; machine-specific local paths are neutralised.</p>
+    </header>
+    <div class="prompt-layout shell">
+      <aside class="prompt-index" aria-label="Prompt information">
+        <p>THIS ROUND</p>
+        <a href="#prompt-text">Full text</a>
+        <a href="/prompt">All rounds</a>
+        <span>{measure}</span>
+      </aside>
+      <div id="prompt-text" class="prompt-code" tabindex="-1"><pre>{prompt}</pre></div>
+    </div>
+  </article>
+  <script is:inline define:vars={{ prompt }}>
+    const button = document.querySelector('[data-copy-prompt]');
+    button?.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(prompt);
+      button.textContent = 'Copied to clipboard';
+      window.setTimeout(() => { button.textContent = 'Copy prompt ⧉'; }, 1800);
+    });
+  </script>
+</BaseLayout>

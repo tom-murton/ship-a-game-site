@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const rounds = [
+  {
+    number: '01',
+    label: 'Build & ship',
+    title: 'Make a real game.',
+    measure: 'Autonomy, the headline score',
+    description: 'Research, design, build, test, and take an original iOS game to App Store Connect at Ready to Submit.',
+    href: '/prompts/round-1',
+  },
+  {
+    number: '02',
+    label: 'Make it better',
+    title: 'Critique your own work.',
+    measure: 'Self-critique + iteration quality',
+    description: 'Return with fresh eyes, play what you shipped, research what would improve it, and make the better build real.',
+    href: '/prompts/round-2',
+  },
+  {
+    number: '03',
+    label: 'Tell the story',
+    title: 'Publish the receipts.',
+    measure: 'Honest communication + storytelling',
+    description: 'Write the first-person run report from the logs, including every struggle, intervention, and inconvenient truth.',
+    href: '/prompts/round-3',
+  },
+];
+const reportingRound = rounds[2];
+---
+
+<BaseLayout title="The two-round game challenge | Ship a Game" description="Read the two public game prompts behind Ship a Game: build a production-ready iOS game, then return to critique and improve it.">
+  <article class="protocol-page">
+    <header class="prompt-hero shell">
+      <p class="kicker"><span class="live-dot"></span> Open benchmark protocol</p>
+      <h1>Two rounds to<br /><em>build a great game.</em></h1>
+      <p>Round one tests whether a frontier model can research, build, and prepare a complete iOS game for release. Round two tests whether the same model can look critically at its own work and make the game meaningfully better.</p>
+      <p class="prompt-note">The public copies are identical in substance to the benchmark briefs. Machine-specific local paths are neutralised.</p>
+    </header>
+
+    <section class="shell protocol-grid protocol-grid-primary" aria-label="Game-building rounds">
+      {rounds.slice(0, 2).map((round) => (
+        <article class="protocol-card">
+          <div class="protocol-card-head"><span>ROUND {round.number}</span><span>{round.label}</span></div>
+          <h2>{round.title}</h2>
+          <p>{round.description}</p>
+          <div class="protocol-measure"><span>MEASURES</span><b>{round.measure}</b></div>
+          <a class="text-link" href={round.href}>Read round {round.number} <span aria-hidden="true">↗</span></a>
+        </article>
+      ))}
+    </section>
+
+    <section class="shell reporting-round">
+      <span class="reporting-round-number">03</span>
+      <div><p>THE PUBLIC REPORT</p><h2>{reportingRound.title}</h2><p>{reportingRound.description} This prompt documents the benchmark; it is not a third game-building round.</p></div>
+      <a class="text-link" href={reportingRound.href}>Read the reporting prompt <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="shell protocol-note">
+      <p class="section-label">How scoring works</p>
+      <h2>Autonomy first. Judgement second.</h2>
+      <p>A perfect first round is a one-shot: the model gets a real game to Ready to Submit without a human fix or rescue. Round two asks a different question: can it diagnose the right problems and deliver a noticeably better game? Afterward, two humans give the result a quick playtest. If it falls flat, the model gets another prompt. Every intervention and extra prompt is logged before the reporting prompt turns the run into a public case study.</p>
+    </section>
+  </article>
+</BaseLayout>

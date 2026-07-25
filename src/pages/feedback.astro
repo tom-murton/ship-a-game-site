@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Send feedback | Ship a Game" description="Share feedback, game ideas, model suggestions, or problems with the Ship a Game benchmark.">
+  <section class="feedback-page shell">
+    <div class="feedback-intro">
+      <p class="kicker"><span class="live-dot"></span> The useful kind of human intervention</p>
+      <h1>Tell us what<br /><em>you think.</em></h1>
+      <p>Played a game, spotted something odd, or know which model should go next? Send it here. Every message is stored privately and read by a human.</p>
+      <div class="feedback-notes" aria-label="Feedback details">
+        <span>No account needed</span>
+        <span>Email is optional</span>
+        <span>Nothing is published automatically</span>
+      </div>
+    </div>
+
+    <div class="feedback-card">
+      <form
+        id="feedback-form"
+        name="benchmark-feedback"
+        method="POST"
+        action="/thanks"
+        data-netlify="true"
+        netlify-honeypot="website"
+      >
+        <input type="hidden" name="form-name" value="benchmark-feedback" />
+        <div class="form-field">
+          <label for="kind">What is this about?</label>
+          <select id="kind" name="kind">
+            <option value="general">General feedback</option>
+            <option value="game-idea">A game or model idea</option>
+            <option value="benchmark">The benchmark</option>
+            <option value="bug">Something is broken</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <div class="form-label-row"><label for="message">Your feedback</label><span id="message-count">0 / 2000</span></div>
+          <textarea id="message" name="message" minlength="10" maxlength="2000" rows="8" required aria-describedby="message-help"></textarea>
+          <small id="message-help">At least 10 characters. Specific beats polite.</small>
+        </div>
+
+        <div class="form-field">
+          <label for="replyEmail">Email for a reply <span>(optional)</span></label>
+          <input id="replyEmail" name="replyEmail" type="email" maxlength="254" autocomplete="email" aria-describedby="email-help" />
+          <small id="email-help">Only used if your message needs a response.</small>
+        </div>
+
+        <div class="form-trap" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <input id="pagePath" name="pagePath" type="hidden" />
+
+        <button class="button primary feedback-submit" type="submit">Send feedback <span aria-hidden="true">↗</span></button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#feedback-form');
+  const message = document.querySelector<HTMLTextAreaElement>('#message');
+  const counter = document.querySelector<HTMLElement>('#message-count');
+  const pagePath = document.querySelector<HTMLInputElement>('#pagePath');
+
+  if (pagePath) {
+    try {
+      const referrer = document.referrer ? new URL(document.referrer) : null;
+      pagePath.value = referrer?.origin === window.location.origin ? referrer.pathname : '/feedback';
+    } catch {
+      pagePath.value = '/feedback';
+    }
+  }
+
+  message?.addEventListener('input', () => {
+    if (counter) counter.textContent = `${message.value.length} / 2000`;
+  });
+
+  form?.addEventListener('submit', () => {
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (button) {
+      button.disabled = true;
+      button.textContent = 'Sending...';
+    }
+  });
+</script>
