@@ -21,14 +21,17 @@ function or public submission list. Read submissions in the Netlify dashboard un
 
 ## Deployment
 
-The public GitHub repository is connected to Netlify through a repository-scoped,
-read-only deploy key and a GitHub push webhook. Pushes to `main` deploy production;
-pull requests receive deploy previews. The Netlify GitHub App is not required.
+The canonical site deploys to its existing Vercel project. Netlify is deliberately
+kept as a frozen feedback endpoint because Netlify Forms are free but every production
+deploy consumes 15 credits. The GitHub webhook and deploy key for Netlify have been
+removed, so ordinary pushes cannot spend Netlify credits.
 
-- Netlify project: `ship-a-game`
-- Netlify project ID: `a37e7c95-c0b4-4369-aa9f-823f0cd1a85f`
+- Vercel project: `ship-a-game`
+- Vercel project ID: `prj_hb5UDbo3qdA61qw25T6ASrjUgkKj`
 - Production domain: `https://shipagame.weevolve.app`
-- DNS provider: Namecheap
+- Netlify feedback endpoint: `https://ship-a-game.netlify.app/feedback`
+- Netlify project ID: `a37e7c95-c0b4-4369-aa9f-823f0cd1a85f`
 
-Do not deploy this project to Vercel. The live games are paid products, so the
-commercial benchmark belongs on Netlify rather than Vercel's Hobby plan.
+`vercel.json` redirects `/feedback` and `/thanks` to the frozen Netlify deployment.
+Do not reconnect this repository to Netlify or run `netlify deploy --prod` for routine
+content changes.

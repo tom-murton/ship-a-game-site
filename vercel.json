@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/feedback",
+      "destination": "https://ship-a-game.netlify.app/feedback",
+      "permanent": false
+    },
+    {
+      "source": "/thanks",
+      "destination": "https://ship-a-game.netlify.app/thanks",
+      "permanent": false
+    }
+  ]
+}

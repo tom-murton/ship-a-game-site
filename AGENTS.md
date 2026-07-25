@@ -34,11 +34,14 @@ Use the primary logs and store records. A missing human playtest stays explicitl
 Run `npm run build`. For visual changes, inspect desktop and mobile widths, keyboard
 navigation, reduced motion, contrast and image alt text.
 
-The public GitHub repository deploys to Netlify through a repository-scoped, read-only
-deploy key and a GitHub push webhook; the Netlify GitHub App is not required. `main` is
-production and pull requests receive previews. The Netlify project ID is
-`a37e7c95-c0b4-4369-aa9f-823f0cd1a85f`. The canonical domain is
-`shipagame.weevolve.app`; Namecheap provides DNS. Feedback uses Netlify Forms.
+The canonical site deploys to Vercel project `ship-a-game`
+(`prj_hb5UDbo3qdA61qw25T6ASrjUgkKj`) and the domain is
+`shipagame.weevolve.app`. Netlify project
+`a37e7c95-c0b4-4369-aa9f-823f0cd1a85f` is a frozen feedback endpoint only.
+Its GitHub webhook and deploy key are intentionally removed because every Netlify
+production deploy consumes 15 credits. `vercel.json` redirects `/feedback` and
+`/thanks` to that frozen deployment.
 
-Do not reintroduce Vercel Functions, Neon or another database for feedback. Do not
-deploy this commercial benchmark to Vercel's Hobby plan.
+Do not reconnect this repository to Netlify or run a Netlify production deploy for
+routine content changes. Do not reintroduce Vercel Functions, Neon or another database
+for feedback.
