@@ -32,5 +32,6 @@ previews.
 - Vercel project ID: `prj_hb5UDbo3qdA61qw25T6ASrjUgkKj`
 - Production domain: `https://shipagame.weevolve.app`
 - Private feedback store: `ship-a-game-feedback`
+- Private feedback store ID: `store_5SgK8zYtp9SfweV3`
 
 Netlify is no longer part of the production path.
