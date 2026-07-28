@@ -28,7 +28,7 @@ round2Score: "95/100"
 round2Interventions: 1
 round3Score: "100/100"
 round3Interventions: 0
-playtestVerdict: "Not recorded — no completed human playtest log exists"
+playtestVerdict: "Not recorded: no completed human playtest log exists"
 extraPrompts: 0
 appStoreUrl: "https://apps.apple.com/..."
 sourceUrl: "https://github.com/..."

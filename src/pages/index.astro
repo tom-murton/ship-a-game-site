@@ -19,7 +19,7 @@ const liveGames = allGames.sort((a, b) => b.data.date.valueOf() - a.data.date.va
       </div>
       <div class="hero-quality">
         <span>THE ANTI-SLOP CHECK</span>
-        <div><strong>No AI slop gets a free pass.</strong><p>The protocol requires a human playtest and a quick fresh-player check. If that evidence is missing, the report says “Not recorded” instead of quietly awarding a pass. Every extra quality-gate prompt is published.</p></div>
+        <div><strong>No AI slop gets a free pass.</strong><p>Every game needs my playtest plus a quick fresh-player check. If the evidence is missing, the report says “Not recorded”. If it fails, the model gets another prompt, and that prompt is published.</p></div>
       </div>
     </div>
     <div class="pass-board" aria-label="The two game-building rounds">
@@ -44,7 +44,7 @@ const liveGames = allGames.sort((a, b) => b.data.date.valueOf() - a.data.date.va
         <b>BETTER BUILD</b>
       </article>
       <div class="pass-playtest"><span>HUMAN FUN CHECK</span><strong>Fun, different, worth another go?</strong><b>PASS OR PROMPT AGAIN</b></div>
-      <div class="pass-board-foot"><span>03</span><p>Then the model writes the case study from both rounds’ logs.</p><a href="/prompts/round-3">Read the reporting prompt ↗</a></div>
+      <div class="pass-board-foot"><span>03</span><p>The model writes the public report from both rounds’ logs.</p><a href="/prompts/round-3">Reporting prompt ↗</a></div>
     </div>
   </section>
 
@@ -134,7 +134,7 @@ const liveGames = allGames.sort((a, b) => b.data.date.valueOf() - a.data.date.va
     <div class="fairness-grid">
       <article><span>01</span><h3>Same loaded Mac</h3><p>Xcode, Swift, Godot, Unity, asset generation, simulator tooling, and App Store access are ready before the clock starts.</p></article>
       <article><span>02</span><h3>Its own cockpit</h3><p>Claude uses Claude Code, GPT uses Codex, and Gemini uses Antigravity. That is the product people actually choose.</p></article>
-      <article><span>03</span><h3>Human quality gate</h3><p>The intended protocol is an operator playtest plus a fresh second opinion. Each report shows the verdict—or clearly marks it as not recorded.</p></article>
+      <article><span>03</span><h3>Human quality gate</h3><p>The intended protocol is an operator playtest plus a fresh second opinion. Each report shows the verdict, or clearly marks it as not recorded.</p></article>
       <article><span>04</span><h3>Every assist logged</h3><p>Human nudges, fixes, rescues, and extra prompts stay attached to the run. Apple’s required account steps are excluded.</p></article>
     </div>
     <div class="rig-strip">

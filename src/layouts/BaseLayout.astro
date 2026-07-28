@@ -17,7 +17,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#101118" />
     <link rel="canonical" href={canonical} />
@@ -42,6 +42,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <a href="/#method">Method</a>
         <a href="/#pricing">Why paid?</a>
       </nav>
+      <details class="mobile-menu">
+        <summary>Menu</summary>
+        <div>
+          <a href="/prompt">The challenge</a>
+          <a href="/#games">Games</a>
+          <a href="/#method">Method</a>
+          <a href="/#pricing">Why paid?</a>
+          <a href="/feedback">Send feedback</a>
+        </div>
+      </details>
       <a class="header-cta" href="/feedback">Send feedback</a>
     </header>
     <main id="main">
