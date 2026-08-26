@@ -15,23 +15,38 @@ npm run build
 
 ## Feedback
 
-The form at `/feedback` posts to a small Vercel Function. Each message is stored as a
-private JSON object in the `ship-a-game-feedback` Vercel Blob store. Nothing is exposed
-publicly or published automatically.
+The form at `/feedback` posts to the Cloudflare Worker at `/api/feedback`. Each message
+is stored as one private JSON object in the EU-jurisdiction
+`ship-a-game-feedback-eu` R2 bucket. The bucket has no public domain and nothing is
+published automatically.
 
-Read submissions in Vercel under **Storage → ship-a-game-feedback**. The function keeps
-only the submitted message, optional reply email, category, source page and timestamp.
+Read submissions from the private R2 bucket in the Cloudflare dashboard. The Worker
+keeps only the submitted message, optional reply email, category, source page and
+timestamp. Delete feedback after it has been handled and is no longer needed.
 
 ## Deployment
 
-The canonical site deploys to its existing Vercel project through GitHub integration.
-Pushes to `main` deploy to production; other branches and pull requests receive Vercel
-previews.
+The primary target is Cloudflare Workers with Static Assets. Static requests bypass
+Worker execution; only `/api/feedback` runs the Worker and writes to R2.
 
-- Vercel project: `ship-a-game`
-- Vercel project ID: `prj_hb5UDbo3qdA61qw25T6ASrjUgkKj`
+- Cloudflare Worker: `ship-a-game-site`
+- Static output: `dist`
 - Production domain: `https://shipagame.weevolve.app`
-- Private feedback store: `ship-a-game-feedback`
-- Private feedback store ID: `store_5SgK8zYtp9SfweV3`
+- Private feedback bucket: `ship-a-game-feedback-eu`
+- R2 binding: `FEEDBACK_BUCKET`
 
-Netlify is no longer part of the production path.
+```sh
+npm ci
+npm run check
+npm test
+npm run build
+npm run dev:cloudflare
+npm run deploy
+```
+
+Run `npm run types:cloudflare` after changing bindings in `wrangler.jsonc`.
+Cloudflare account setup, preview checks, custom-domain cutover and rollback are in
+[`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+
+The Vercel Function and Blob dependency remain temporarily as a rollback path. Netlify
+is not part of the deployment path.

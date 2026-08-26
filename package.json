@@ -5,9 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "dev:cloudflare": "npm run build && wrangler dev",
+    "build": "astro check && astro build && node scripts/prepare-cloudflare-assets.mjs",
+    "deploy": "npm run build && wrangler deploy",
+    "deploy:vercel": "vercel --prod",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check && tsc -p worker/tsconfig.json",
+    "test": "node --test tests/feedback.test.js",
+    "types:cloudflare": "wrangler types --include-runtime false"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.2",
@@ -16,7 +21,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@cloudflare/workers-types": "^5.20260826.1",
     "@types/node": "^26.1.1",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.126.0"
   }
 }

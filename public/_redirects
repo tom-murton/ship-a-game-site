@@ -1,0 +1,15 @@
+/ /_root.html 200
+/feedback /feedback.html 200
+/feedback/ /feedback.html 200
+/thanks /thanks.html 200
+/thanks/ /thanks.html 200
+/prompt /prompt.html 200
+/prompt/ /prompt.html 200
+/prompts/round-1 /prompts/round-1.html 200
+/prompts/round-1/ /prompts/round-1.html 200
+/prompts/round-2 /prompts/round-2.html 200
+/prompts/round-2/ /prompts/round-2.html 200
+/prompts/round-3 /prompts/round-3.html 200
+/prompts/round-3/ /prompts/round-3.html 200
+/games/:slug /games/:slug.html 200
+/games/:slug/ /games/:slug.html 200

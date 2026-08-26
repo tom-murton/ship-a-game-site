@@ -5,4 +5,8 @@ export default defineConfig({
   integrations: [mdx()],
   site: 'https://shipagame.weevolve.app',
   output: 'static',
+  trailingSlash: 'never',
+  build: {
+    format: 'file',
+  },
 });

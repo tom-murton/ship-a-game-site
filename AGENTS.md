@@ -34,14 +34,26 @@ Use the primary logs and store records. A missing human playtest stays explicitl
 Run `npm run build`. For visual changes, inspect desktop and mobile widths, keyboard
 navigation, reduced motion, contrast and image alt text.
 
-The canonical site deploys to Vercel project `ship-a-game`
-(`prj_hb5UDbo3qdA61qw25T6ASrjUgkKj`) and the domain is
-`shipagame.weevolve.app`. GitHub `main` is the production branch.
+The canonical site deploys to Cloudflare Worker `ship-a-game-site`; the domain is
+`shipagame.weevolve.app` and GitHub `main` is the production branch. Static assets
+come from `dist`. `scripts/prepare-cloudflare-assets.mjs` creates the generated
+`dist/_root.html` used by the root rewrite; edit the Astro page, not that build output.
+Only `/api/feedback` may run Worker code; keep
+`assets.run_worker_first` narrowly scoped to that path.
 
-Feedback posts to `api/feedback.js`, a small Vercel Function, and is stored as private
-JSON in the `ship-a-game-feedback` Vercel Blob store. Keep submissions private, collect
-only the existing form fields and never expose the Blob token to the browser. Read
-submissions from the Vercel Storage dashboard.
+Feedback is handled by `worker/index.js` and stored as private JSON in the
+EU-jurisdiction `ship-a-game-feedback-eu` R2 bucket. Keep the bucket private, collect
+only the existing form fields and never log messages or reply email addresses. Read
+submissions from the Cloudflare R2 dashboard and delete them when no longer needed.
+Run `npm run types:cloudflare` after changing bindings; do not hand-edit
+`worker-configuration.d.ts`.
+
+Before deployment, run `npm run check`, `npm test`, `npm run build` and
+`npx wrangler deploy --dry-run`. Verify the feedback endpoint in `wrangler dev`,
+including a stored test object that is removed afterwards.
+
+`api/feedback.js`, `vercel.json` and `@vercel/blob` remain only for the documented
+Vercel rollback window. Do not add new Vercel-only behaviour.
 
 Netlify is not part of the production path. Do not reconnect this repository to
 Netlify or run a Netlify deployment.
