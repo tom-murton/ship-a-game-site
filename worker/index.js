@@ -1,5 +1,7 @@
 /// <reference path="../worker-configuration.d.ts" />
 
+import { neon } from '@neondatabase/serverless';
+
 const feedbackKinds = new Set(['general', 'game-idea', 'benchmark', 'bug']);
 const maximumBodyBytes = 16_384;
 
@@ -99,10 +101,27 @@ function methodNotAllowed() {
 }
 
 /**
+ * Store one validated feedback submission in the existing private Neon database.
+ * The HTTP driver is the recommended connection method for a single query from a
+ * Cloudflare Worker.
+ *
+ * @param {Env} env
+ * @param {{ kind: string, message: string, replyEmail: string | null, pagePath: string }} feedback
+ */
+async function storeFeedback(env, feedback) {
+  const sql = neon(env.DATABASE_URL);
+  await sql`
+    INSERT INTO public.feedback (kind, message, reply_email, page_path)
+    VALUES (${feedback.kind}, ${feedback.message}, ${feedback.replyEmail}, ${feedback.pagePath})
+  `;
+}
+
+/**
  * @param {Request} request
  * @param {Env} env
+ * @param {typeof storeFeedback} [insertFeedback]
  */
-export async function handleFeedbackRequest(request, env) {
+export async function handleFeedbackRequest(request, env, insertFeedback = storeFeedback) {
   if (request.method !== 'POST') return methodNotAllowed();
 
   let body;
@@ -133,25 +152,13 @@ export async function handleFeedbackRequest(request, env) {
     return redirect('/feedback?error=invalid');
   }
 
-  const submittedAt = new Date().toISOString();
-  const pathname = [
-    'feedback',
-    submittedAt.slice(0, 10),
-    `${submittedAt.replaceAll(':', '-')}-${crypto.randomUUID()}.json`,
-  ].join('/');
-
   try {
-    await env.FEEDBACK_BUCKET.put(
-      pathname,
-      JSON.stringify({
-        submittedAt,
-        kind,
-        message,
-        replyEmail: replyEmail || null,
-        pagePath,
-      }, null, 2),
-      { httpMetadata: { contentType: 'application/json' } },
-    );
+    await insertFeedback(env, {
+      kind,
+      message,
+      replyEmail: replyEmail || null,
+      pagePath,
+    });
     return redirect('/thanks');
   } catch (error) {
     console.error(JSON.stringify({

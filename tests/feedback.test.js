@@ -3,25 +3,24 @@ import test from 'node:test';
 
 import worker, { handleFeedbackRequest } from '../worker/index.js';
 
-function createEnvironment({ putError } = {}) {
+function createEnvironment({ insertError } = {}) {
   const writes = [];
   let assetRequests = 0;
+  const insertFeedback = async (_env, feedback) => {
+    if (insertError) throw insertError;
+    writes.push(feedback);
+  };
   return {
     env: {
+      DATABASE_URL: 'postgresql://test.invalid/neondb',
       ASSETS: {
         async fetch(request) {
           assetRequests += 1;
           return new Response(`asset:${new URL(request.url).pathname}`);
         },
       },
-      FEEDBACK_BUCKET: {
-        async put(key, value, options) {
-          if (putError) throw putError;
-          writes.push({ key, value, options });
-          return {};
-        },
-      },
     },
+    insertFeedback,
     writes,
     assetRequestCount: () => assetRequests,
   };
@@ -51,53 +50,48 @@ test('rejects non-POST methods without invoking storage', async () => {
   assert.equal(writes.length, 0);
 });
 
-test('accepts valid URL-encoded feedback and writes one private R2 object', async () => {
-  const { env, writes } = createEnvironment();
+test('accepts valid URL-encoded feedback and inserts one private Neon row', async () => {
+  const { env, insertFeedback, writes } = createEnvironment();
   const response = await handleFeedbackRequest(feedbackRequest({
     kind: 'benchmark',
     message: 'This is a clearly marked test message.',
     replyEmail: 'tester@example.com',
     pagePath: '/games/brinkball',
-  }), env);
+  }), env, insertFeedback);
 
   assert.equal(response.status, 303);
   assert.equal(response.headers.get('location'), '/thanks');
   assert.equal(writes.length, 1);
-  assert.match(writes[0].key, /^feedback\/\d{4}-\d{2}-\d{2}\/.+\.json$/);
-  assert.deepEqual(writes[0].options, {
-    httpMetadata: { contentType: 'application/json' },
-  });
-  const stored = JSON.parse(writes[0].value);
+  const stored = writes[0];
   assert.equal(stored.kind, 'benchmark');
   assert.equal(stored.message, 'This is a clearly marked test message.');
   assert.equal(stored.replyEmail, 'tester@example.com');
   assert.equal(stored.pagePath, '/games/brinkball');
-  assert.match(stored.submittedAt, /^\d{4}-\d{2}-\d{2}T/);
 });
 
 test('preserves JSON submissions and normalises invalid source paths', async () => {
-  const { env, writes } = createEnvironment();
+  const { env, insertFeedback, writes } = createEnvironment();
   const response = await handleFeedbackRequest(feedbackRequest({
     kind: 'general',
     message: 'JSON feedback remains supported.',
     replyEmail: '',
     pagePath: 'https://example.com/not-local',
-  }, 'application/json'), env);
+  }, 'application/json'), env, insertFeedback);
 
   assert.equal(response.status, 303);
   assert.equal(writes.length, 1);
-  const stored = JSON.parse(writes[0].value);
+  const stored = writes[0];
   assert.equal(stored.replyEmail, null);
   assert.equal(stored.pagePath, '/feedback');
 });
 
-test('honeypot submissions succeed without storing an object', async () => {
-  const { env, writes } = createEnvironment();
+test('honeypot submissions succeed without storing a row', async () => {
+  const { env, insertFeedback, writes } = createEnvironment();
   const response = await handleFeedbackRequest(feedbackRequest({
     website: 'spam.example',
     kind: 'general',
     message: 'This should not be stored.',
-  }), env);
+  }), env, insertFeedback);
 
   assert.equal(response.status, 303);
   assert.equal(response.headers.get('location'), '/thanks');
@@ -110,9 +104,9 @@ for (const [name, body] of [
   ['invalid email', { kind: 'general', message: 'A long enough message', replyEmail: 'not-email' }],
   ['long message', { kind: 'general', message: 'x'.repeat(2001) }],
 ]) {
-  test(`rejects ${name} without storing an object`, async () => {
-    const { env, writes } = createEnvironment();
-    const response = await handleFeedbackRequest(feedbackRequest(body), env);
+  test(`rejects ${name} without storing a row`, async () => {
+    const { env, insertFeedback, writes } = createEnvironment();
+    const response = await handleFeedbackRequest(feedbackRequest(body), env, insertFeedback);
     assert.equal(response.status, 303);
     assert.equal(response.headers.get('location'), '/feedback?error=invalid');
     assert.equal(writes.length, 0);
@@ -120,18 +114,18 @@ for (const [name, body] of [
 }
 
 test('rejects oversized request bodies before parsing', async () => {
-  const { env, writes } = createEnvironment();
+  const { env, insertFeedback, writes } = createEnvironment();
   const response = await handleFeedbackRequest(feedbackRequest({
     kind: 'general',
     message: 'x'.repeat(17_000),
-  }), env);
+  }), env, insertFeedback);
   assert.equal(response.status, 303);
   assert.equal(response.headers.get('location'), '/feedback?error=invalid');
   assert.equal(writes.length, 0);
 });
 
-test('returns the existing safe error redirect when R2 storage fails', async () => {
-  const { env } = createEnvironment({ putError: new Error('simulated') });
+test('returns the existing safe error redirect when Neon storage fails', async () => {
+  const { env, insertFeedback } = createEnvironment({ insertError: new Error('simulated') });
   const originalConsoleError = console.error;
   const logged = [];
   console.error = (message) => logged.push(message);
@@ -139,7 +133,7 @@ test('returns the existing safe error redirect when R2 storage fails', async () 
     const response = await handleFeedbackRequest(feedbackRequest({
       kind: 'bug',
       message: 'Storage should fail for this test.',
-    }), env);
+    }), env, insertFeedback);
     assert.equal(response.status, 303);
     assert.equal(response.headers.get('location'), '/feedback?error=send');
     assert.equal(logged.length, 1);

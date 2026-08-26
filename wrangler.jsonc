@@ -11,13 +11,6 @@
     "not_found_handling": "404-page",
     "run_worker_first": ["/api/feedback"]
   },
-  "r2_buckets": [
-    {
-      "binding": "FEEDBACK_BUCKET",
-      "bucket_name": "ship-a-game-feedback-eu",
-      "jurisdiction": "eu"
-    }
-  ],
   "observability": {
     "enabled": true,
     "logs": {

@@ -41,16 +41,16 @@ come from `dist`. `scripts/prepare-cloudflare-assets.mjs` creates the generated
 Only `/api/feedback` may run Worker code; keep
 `assets.run_worker_first` narrowly scoped to that path.
 
-Feedback is handled by `worker/index.js` and stored as private JSON in the
-EU-jurisdiction `ship-a-game-feedback-eu` R2 bucket. Keep the bucket private, collect
-only the existing form fields and never log messages or reply email addresses. Read
-submissions from the Cloudflare R2 dashboard and delete them when no longer needed.
+Feedback is handled by `worker/index.js` and stored as private rows in the existing
+Neon project `ship-a-game-feedback`. Keep `DATABASE_URL` in Cloudflare secrets,
+collect only the existing form fields and never log messages or reply email addresses.
+Read submissions from the Neon console and delete them when no longer needed.
 Run `npm run types:cloudflare` after changing bindings; do not hand-edit
 `worker-configuration.d.ts`.
 
 Before deployment, run `npm run check`, `npm test`, `npm run build` and
 `npx wrangler deploy --dry-run`. Verify the feedback endpoint in `wrangler dev`,
-including a stored test object that is removed afterwards.
+including a stored test row that is removed afterwards.
 
 `api/feedback.js`, `vercel.json` and `@vercel/blob` remain only for the documented
 Vercel rollback window. Do not add new Vercel-only behaviour.

@@ -7,5 +7,5 @@
     "skipLibCheck": true,
     "types": ["@cloudflare/workers-types"]
   },
-  "files": ["../worker-configuration.d.ts", "index.js"]
+  "files": ["../worker-configuration.d.ts", "env.d.ts", "index.js"]
 }

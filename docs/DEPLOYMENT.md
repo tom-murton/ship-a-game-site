@@ -6,8 +6,8 @@
 - Static build: Astro output in `dist`
 - Worker entry point: `worker/index.js`
 - Dynamic route: `POST /api/feedback` only
-- Private storage: `ship-a-game-feedback-eu`, R2 jurisdiction `eu`
-- R2 binding: `FEEDBACK_BUCKET`
+- Private storage: Neon project `ship-a-game-feedback`, table `public.feedback`
+- Worker secret: `DATABASE_URL`
 - Production hostname: `shipagame.weevolve.app`
 
 `assets.run_worker_first` is restricted to `/api/feedback`. All pages, images and
@@ -17,24 +17,23 @@ The post-build script copies `index.html` to generated `dist/_root.html`; this a
 Cloudflare's automatic slash redirects while preserving the current contract where
 both slash and no-slash page URLs return `200`.
 
-## Cloudflare account setup
+## Feedback database setup
 
-R2 must be enabled by the account owner before the first full deployment if the
-account requires billing acceptance or a payment method. Do not accept paid terms
-without the owner's approval.
+Use the existing Neon Free project `ship-a-game-feedback` (`autumn-pine-93042632`).
+It is in `aws-us-west-2`, contains the existing `public.feedback` table and had one
+archived test row at migration time. This records the existing data-location choice;
+do not create a second project or move the row silently.
 
-Create a private R2 bucket named `ship-a-game-feedback-eu` with the `eu`
-jurisdiction. Do not enable public access, attach a public bucket domain or create an
-R2 API token for the Worker: it uses the in-process binding declared in
-`wrangler.jsonc`.
+Set the project's connection string as the encrypted Cloudflare Worker secret
+`DATABASE_URL`. Never put it in Git, build logs or a client-side environment variable.
+The Worker uses Neon's HTTP driver for its single parameterised insert.
 
 The Vercel Blob inventory at migration time contained zero objects, so there is no
-historic feedback payload to copy. Keep the Vercel store intact through the rollback
-window.
+historic Blob feedback payload to copy. Keep the Vercel store intact through the
+rollback window. The existing Neon row remains in place.
 
-There is no automatic object-expiry rule. Feedback is retained only while it remains
-useful for review or reply, then deleted manually. Introduce a lifecycle rule only
-after an explicit retention period has been agreed.
+Feedback is retained only while it remains useful for review or reply, then deleted
+manually from Neon. Introduce automatic retention only after a period has been agreed.
 
 ## Build and local verification
 
@@ -59,11 +58,11 @@ curl -i -X POST http://localhost:8787/api/feedback \
 ```
 
 The GET must return `405` with `Allow: POST`; a valid POST must return `303` to
-`/thanks`. Verify the local test object and remove it before finishing the test.
+`/thanks`. Verify the test row in Neon and remove it before finishing the test.
 
 ## Deployment and verification
 
-After the bucket exists:
+After `DATABASE_URL` is configured:
 
 ```sh
 npm run deploy
@@ -71,8 +70,8 @@ npm run deploy
 
 Before production cutover, deploy to and crawl the `workers.dev` URL with a temporary
 `X-Robots-Tag: noindex, nofollow` header. Do not commit that preview-only header.
-Exercise invalid fields, an oversized body, the honeypot, an R2 failure and one real
-test submission. Verify that exactly one private object was written, then delete it.
+Exercise invalid fields, an oversized body, the honeypot, a database failure and one
+real test submission. Verify that exactly one private row was written, then delete it.
 
 The `weevolve.app` DNS zone is shared with WeEvolve and TachoClear. Follow the estate
 migration runbook: move DNS authority while preserving the Vercel targets, then switch
@@ -83,7 +82,7 @@ site and feedback endpoint pass on Cloudflare preview.
 
 Workers Logs are enabled. The endpoint emits one structured error event containing
 only an event name and error type. Do not add feedback messages, reply email addresses,
-request bodies or stored object content to logs.
+request bodies or stored row content to logs.
 
 ## Rollback
 

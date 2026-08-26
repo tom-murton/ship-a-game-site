@@ -16,24 +16,23 @@ npm run build
 ## Feedback
 
 The form at `/feedback` posts to the Cloudflare Worker at `/api/feedback`. Each message
-is stored as one private JSON object in the EU-jurisdiction
-`ship-a-game-feedback-eu` R2 bucket. The bucket has no public domain and nothing is
-published automatically.
+is inserted as one private row in the existing Neon project
+`ship-a-game-feedback`. Nothing is published automatically.
 
-Read submissions from the private R2 bucket in the Cloudflare dashboard. The Worker
+Read submissions from the private `feedback` table in the Neon console. The Worker
 keeps only the submitted message, optional reply email, category, source page and
 timestamp. Delete feedback after it has been handled and is no longer needed.
 
 ## Deployment
 
 The primary target is Cloudflare Workers with Static Assets. Static requests bypass
-Worker execution; only `/api/feedback` runs the Worker and writes to R2.
+Worker execution; only `/api/feedback` runs the Worker and writes to Neon.
 
 - Cloudflare Worker: `ship-a-game-site`
 - Static output: `dist`
 - Production domain: `https://shipagame.weevolve.app`
-- Private feedback bucket: `ship-a-game-feedback-eu`
-- R2 binding: `FEEDBACK_BUCKET`
+- Private feedback database: Neon project `ship-a-game-feedback`
+- Cloudflare secret: `DATABASE_URL`
 
 ```sh
 npm ci
