@@ -62,21 +62,23 @@ The GET must return `405` with `Allow: POST`; a valid POST must return `303` to
 
 ## Deployment and verification
 
-After `DATABASE_URL` is configured:
+Cloudflare Builds watches GitHub `main`. A push to `main` runs `npm run build` and
+`wrangler deploy`; verify the matching build and live custom domain before reporting
+production complete. For an intentional manual recovery after `DATABASE_URL` is
+configured:
 
 ```sh
 npm run deploy
 ```
 
-Before production cutover, deploy to and crawl the `workers.dev` URL with a temporary
+For a substantial infrastructure change, deploy to and crawl the `workers.dev` URL with a temporary
 `X-Robots-Tag: noindex, nofollow` header. Do not commit that preview-only header.
 Exercise invalid fields, an oversized body, the honeypot, a database failure and one
 real test submission. Verify that exactly one private row was written, then delete it.
 
-The `weevolve.app` DNS zone is shared with WeEvolve and TachoClear. Follow the estate
-migration runbook: move DNS authority while preserving the Vercel targets, then switch
-the three hostnames individually. Attach `shipagame.weevolve.app` only after the static
-site and feedback endpoint pass on Cloudflare preview.
+The `weevolve.app` DNS zone is shared with WeEvolve and TachoClear and is already live
+on Cloudflare. Preserve the existing apex, product-host and Email Routing records. Do
+not detach `shipagame.weevolve.app` during routine deployments.
 
 ## Logs and personal data
 

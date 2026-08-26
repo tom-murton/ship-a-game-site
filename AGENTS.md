@@ -41,6 +41,11 @@ come from `dist`. `scripts/prepare-cloudflare-assets.mjs` creates the generated
 Only `/api/feedback` may run Worker code; keep
 `assets.run_worker_first` narrowly scoped to that path.
 
+Cloudflare Builds watches GitHub `main`; a push to `main` runs `npm run build` and
+`wrangler deploy`. Use `npm run deploy` only for an intentional manual recovery or an
+explicitly requested deployment. Confirm the resulting build and the live custom domain
+before reporting production complete.
+
 Feedback is handled by `worker/index.js` and stored as private rows in the existing
 Neon project `ship-a-game-feedback`. Keep `DATABASE_URL` in Cloudflare secrets,
 collect only the existing form fields and never log messages or reply email addresses.

@@ -27,6 +27,7 @@ timestamp. Delete feedback after it has been handled and is no longer needed.
 
 The primary target is Cloudflare Workers with Static Assets. Static requests bypass
 Worker execution; only `/api/feedback` runs the Worker and writes to Neon.
+Cloudflare Builds watches GitHub `main` and deploys it to production automatically.
 
 - Cloudflare Worker: `ship-a-game-site`
 - Static output: `dist`
