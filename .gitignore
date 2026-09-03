@@ -13,3 +13,11 @@ dist/
 
 # Local Netlify folder
 .netlify
+
+# Standard studio ignore rules (3 Sep 2026 audit)
+.env
+.env.*
+!.env.sample
+excalidraw.log
+firebase-debug.log
+.claude/settings.local.json
