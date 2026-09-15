@@ -2,9 +2,10 @@
 
 This is the canonical repository for `https://shipagame.weevolve.app`, the public
 benchmark that tests whether frontier AI models can research, build, improve and
-report on real paid iOS games.
+report on real paid iOS games. Its readers are builders and people assessing what those
+models actually achieved; clear evidence and honest limitations matter more than scores.
 
-## Read before changing anything
+## Read for the task
 
 - `README.md` — local setup and deployment.
 - `content/games/README.md` — publishing contract for game reports.
@@ -31,7 +32,8 @@ Use the primary logs and store records. A missing human playtest stays explicitl
 
 ## Validation and deployment
 
-Run `npm run build`. For visual changes, inspect desktop and mobile widths, keyboard
+Build content and page changes with `npm run build`; use reference checks for documentation
+changes. For visual changes, inspect desktop and mobile widths, keyboard
 navigation, reduced motion, contrast and image alt text.
 
 The canonical site deploys to Cloudflare Worker `ship-a-game-site`; the domain is
@@ -53,12 +55,21 @@ Read submissions from the Neon console and delete them when no longer needed.
 Run `npm run types:cloudflare` after changing bindings; do not hand-edit
 `worker-configuration.d.ts`.
 
-Before deployment, run `npm run check`, `npm test`, `npm run build` and
-`npx wrangler deploy --dry-run`. Verify the feedback endpoint in `wrangler dev`,
-including a stored test row that is removed afterwards.
+For Worker or feedback changes, run `npm run check`, `npm test` and the build; verify
+the endpoint in `wrangler dev` when integration behaviour changes. Use a clearly marked
+test row and remove exactly that row afterwards. Routine content changes need no database
+write. For deployment configuration changes, also run `npx wrangler deploy --dry-run`.
 
 `api/feedback.js`, `vercel.json` and `@vercel/blob` remain only for the documented
 Vercel rollback window. Do not add new Vercel-only behaviour.
 
 Netlify is not part of the production path. Do not reconnect this repository to
 Netlify or run a Netlify deployment.
+
+## Working agreements
+
+Use a task branch; reuse an existing branch/worktree only for the same task and preserve
+unrelated changes. Complete the requested scope and appropriate checks without routine
+approval pauses. Keep current work in the existing tracker; update an instruction only
+when this task changes its meaning or invalidates its references. Skills are optional
+sources of relevant expertise, not a mandatory sequence for every change.
