@@ -1,0 +1,244 @@
+{
+  "checked_at_utc": "2026-10-23T07:36:53.302379+00:00",
+  "code_pull_request": "https://github.com/tom-murton/ship-a-game-site/pull/3",
+  "production_main_sha": "4ef3570d3d0a68e95eb307440010c9520329a032",
+  "cloudflare_build": {
+    "id": "df078642-2838-41cb-a7d0-a5a47a5a669e",
+    "status": "success",
+    "commit": "4ef3570d3d0a68e95eb307440010c9520329a032",
+    "provenance": "Matching main build verified by internal lead through Cloudflare"
+  },
+  "verification_method": "TLS-verified system curl with browser UA; GET public HTML/XML and HEAD public links only; DNT:1 + Sec-GPC:1 on every request; no POST/form submissions; Rest+Rise store bridge redirects not followed",
+  "summary": {
+    "canonical_html_pages": 9,
+    "canonical_schema_description_robots_visible_body_matches": 9,
+    "exact_byte_matches": 9,
+    "page_failures": []
+  },
+  "pages": [
+    {
+      "url": "https://shipagame.weevolve.app/feedback",
+      "status": 200,
+      "canonical": [
+        "https://shipagame.weevolve.app/feedback"
+      ],
+      "schema_types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "schema_count": 1,
+      "canonical_match": true,
+      "jsonld_match": true,
+      "description_match": true,
+      "robots_match": true,
+      "visible_text_match": true,
+      "bytes_match": true,
+      "local_sha256": "1621f78db9562a4c05112c10fdfb00a36daa398eb66a8d8a2423b168744df1af",
+      "live_sha256": "1621f78db9562a4c05112c10fdfb00a36daa398eb66a8d8a2423b168744df1af"
+    },
+    {
+      "url": "https://shipagame.weevolve.app/games/brinkball",
+      "status": 200,
+      "canonical": [
+        "https://shipagame.weevolve.app/games/brinkball"
+      ],
+      "schema_types": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "Article",
+        "VideoGame",
+        "BreadcrumbList"
+      ],
+      "schema_count": 1,
+      "canonical_match": true,
+      "jsonld_match": true,
+      "description_match": true,
+      "robots_match": true,
+      "visible_text_match": true,
+      "bytes_match": true,
+      "local_sha256": "cb02cb095619fa69eee8e7ca5b1644e2a06d9190a3a759baa60e5c6d6908d2b5",
+      "live_sha256": "cb02cb095619fa69eee8e7ca5b1644e2a06d9190a3a759baa60e5c6d6908d2b5"
+    },
+    {
+      "url": "https://shipagame.weevolve.app/games/ringbloom",
+      "status": 200,
+      "canonical": [
+        "https://shipagame.weevolve.app/games/ringbloom"
+      ],
+      "schema_types": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "Article",
+        "VideoGame",
+        "BreadcrumbList"
+      ],
+      "schema_count": 1,
+      "canonical_match": true,
+      "jsonld_match": true,
+      "description_match": true,
+      "robots_match": true,
+      "visible_text_match": true,
+      "bytes_match": true,
+      "local_sha256": "3afbec95bc8f251be3d8a7cc15b638844f3cdfc1e9d2409241359342aa592697",
+      "live_sha256": "3afbec95bc8f251be3d8a7cc15b638844f3cdfc1e9d2409241359342aa592697"
+    },
+    {
+      "url": "https://shipagame.weevolve.app/",
+      "status": 200,
+      "canonical": [
+        "https://shipagame.weevolve.app/"
+      ],
+      "schema_types": [
+        "Organization",
+        "WebSite",
+        "CollectionPage"
+      ],
+      "schema_count": 1,
+      "canonical_match": true,
+      "jsonld_match": true,
+      "description_match": true,
+      "robots_match": true,
+      "visible_text_match": true,
+      "bytes_match": true,
+      "local_sha256": "c5e35e1d3766bbf628c33fb9dc4372d401024bda2fdd958b8c8509d4dce1abab",
+      "live_sha256": "c5e35e1d3766bbf628c33fb9dc4372d401024bda2fdd958b8c8509d4dce1abab"
+    },
+    {
+      "url": "https://shipagame.weevolve.app/prompt",
+      "status": 200,
+      "canonical": [
+        "https://shipagame.weevolve.app/prompt"
+      ],
+      "schema_types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "schema_count": 1,
+      "canonical_match": true,
+      "jsonld_match": true,
+      "description_match": true,
+      "robots_match": true,
+      "visible_text_match": true,
+      "bytes_match": true,
+      "local_sha256": "7547ac8469d3e5dd58eabd4623416877079c94797e18a80fb955ce80d65a0dd9",
+      "live_sha256": "7547ac8469d3e5dd58eabd4623416877079c94797e18a80fb955ce80d65a0dd9"
+    },
+    {
+      "url": "https://shipagame.weevolve.app/prompts/round-1",
+      "status": 200,
+      "canonical": [
+        "https://shipagame.weevolve.app/prompts/round-1"
+      ],
+      "schema_types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "schema_count": 1,
+      "canonical_match": true,
+      "jsonld_match": true,
+      "description_match": true,
+      "robots_match": true,
+      "visible_text_match": true,
+      "bytes_match": true,
+      "local_sha256": "b25466617b7c07b85a65e98689e42383a21aeb0ba5e0c91253695e35daa11db6",
+      "live_sha256": "b25466617b7c07b85a65e98689e42383a21aeb0ba5e0c91253695e35daa11db6"
+    },
+    {
+      "url": "https://shipagame.weevolve.app/prompts/round-2",
+      "status": 200,
+      "canonical": [
+        "https://shipagame.weevolve.app/prompts/round-2"
+      ],
+      "schema_types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "schema_count": 1,
+      "canonical_match": true,
+      "jsonld_match": true,
+      "description_match": true,
+      "robots_match": true,
+      "visible_text_match": true,
+      "bytes_match": true,
+      "local_sha256": "15ad333bbac967c53840f28eace735ab98457603c295a85217a9d294252100d7",
+      "live_sha256": "15ad333bbac967c53840f28eace735ab98457603c295a85217a9d294252100d7"
+    },
+    {
+      "url": "https://shipagame.weevolve.app/prompts/round-3",
+      "status": 200,
+      "canonical": [
+        "https://shipagame.weevolve.app/prompts/round-3"
+      ],
+      "schema_types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "schema_count": 1,
+      "canonical_match": true,
+      "jsonld_match": true,
+      "description_match": true,
+      "robots_match": true,
+      "visible_text_match": true,
+      "bytes_match": true,
+      "local_sha256": "de035a7b45205744a693ee2c3cd08746595719011a9a22e163a9d2655e9cec3f",
+      "live_sha256": "de035a7b45205744a693ee2c3cd08746595719011a9a22e163a9d2655e9cec3f"
+    },
+    {
+      "url": "https://shipagame.weevolve.app/thanks",
+      "status": 200,
+      "canonical": [
+        "https://shipagame.weevolve.app/thanks"
+      ],
+      "schema_types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "schema_count": 1,
+      "canonical_match": true,
+      "jsonld_match": true,
+      "description_match": true,
+      "robots_match": true,
+      "visible_text_match": true,
+      "bytes_match": true,
+      "local_sha256": "2cb78171ec328b6df4f5d45424ac94c9d5ae7d6350fea127ff3d17cb2c6eb492",
+      "live_sha256": "2cb78171ec328b6df4f5d45424ac94c9d5ae7d6350fea127ff3d17cb2c6eb492"
+    }
+  ],
+  "sitemaps": [
+    {
+      "url": "https://shipagame.weevolve.app/sitemap.xml",
+      "status": 200,
+      "inventory_match": true,
+      "bytes_match": true,
+      "urls": [
+        "https://shipagame.weevolve.app/",
+        "https://shipagame.weevolve.app/games/brinkball",
+        "https://shipagame.weevolve.app/games/ringbloom",
+        "https://shipagame.weevolve.app/prompt",
+        "https://shipagame.weevolve.app/prompts/round-1",
+        "https://shipagame.weevolve.app/prompts/round-2",
+        "https://shipagame.weevolve.app/prompts/round-3",
+        "https://shipagame.weevolve.app/feedback"
+      ],
+      "excludes_local_previews": true
+    }
+  ],
+  "limitations": [
+    "HTTP checks verify initial HTML, metadata, canonical URLs and visible text, not accessibility, app behaviour or AI citations/recommendations.",
+    "No new professional/source review or native app testing is claimed."
+  ],
+  "search_console": {
+    "observed_on": "2026-10-23",
+    "sitemap_status": "Success",
+    "discovered_pages": 8,
+    "provenance": "Lead submitted and observed authenticated Search Console UI; no indexing claim"
+  }
+}

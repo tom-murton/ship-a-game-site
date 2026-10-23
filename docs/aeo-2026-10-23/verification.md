@@ -1,4 +1,4 @@
-# Ship a Game AI discovery preparation - 23 October 2026
+# Ship a Game AI discovery verification - 23 October 2026
 
 ## Implemented
 
@@ -19,4 +19,4 @@
 - `xmllint --noout public/sitemap.xml` and `git diff --check`: pass.
 - Detailed results: checks.json.
 
-Build used a temporary symlink `node_modules` to the canonical repository's existing `/Users/tommurton/GitHub/ship-a-game-site/node_modules`; it was removed after checks. No install/dependency change, Worker integration test, database write or deployment. Lead owns independent diff review, live browser/production receipts and the final delivery checkpoint. No measured citation/recommendation improvement is claimed.
+Build used a temporary symlink `node_modules` to the canonical repository's existing `/Users/tommurton/GitHub/ship-a-game-site/node_modules`; it was removed after checks. No install/dependency change, Worker integration test, database write or deployment. Independent Gemini4ArgonHigh review approved the actual diff; lead local browser checks passed. [PR3](https://github.com/tom-murton/ship-a-game-site/pull/3) is live at main `4ef3570d3d0a68e95eb307440010c9520329a032`; matching Cloudflare build `df078642-2838-41cb-a7d0-a5a47a5a669e` succeeded. All9 live HTML pages exactly match reviewed bytes/canonical/schema/body facts. Sitemap has8 routes; thanks/404 remain excluded. GSC submission shows Success with8 discovered pages. [Production receipt](production.json); no deployment pending. No measured citation/recommendation improvement is claimed.
