@@ -50,3 +50,21 @@ Cloudflare account setup, preview checks, custom-domain cutover and rollback are
 
 The Vercel Function and Blob dependency remain temporarily as a rollback path. Netlify
 is not part of the deployment path.
+
+## AI discovery checkpoint - 23 October 2026
+
+The shared layout publishes the visible WeEvolve publisher, Ship a Game website and
+page identities. Existing game reports add Article, VideoGame and breadcrumb facts
+from their actual content and store links; the homepage lists that report inventory.
+The report frontmatter `date` is a game release date, so it is not used as an article
+publication or modification date. Model subjects are not presented as human authors,
+and intervention scores are not consumer ratings.
+
+Canonical URLs use the existing clean routes without trailing slashes, matching site
+links, sitemap entries and Cloudflare file rewrites. The sitemap includes all three
+published HTML round prompts; Markdown downloads remain linked from those pages.
+`thanks` and `404` are excluded. No feedback service or deployment configuration changed.
+
+`npm run build` and focused built-page, store/image, sitemap and safe JSON checks pass.
+Preparation evidence is in [`docs/aeo-2026-10-23/`](docs/aeo-2026-10-23/).
+Independent review and live deployment verification remain pending with the lead.

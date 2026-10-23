@@ -7,7 +7,13 @@ const allGames = await getCollection('games');
 const liveGames = allGames.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout>
+<BaseLayout pageType="CollectionPage" mainEntity={{
+  '@type': 'ItemList',
+  itemListElement: liveGames.map((game, index) => ({
+    '@type': 'ListItem', position: index + 1,
+    name: game.data.title, url: new URL(`/games/${game.id}`, Astro.site).href,
+  })),
+}}>
   <section class="hero shell">
     <div class="hero-copy">
       <p class="kicker"><span class="live-dot"></span> An AI game benchmark for games worth playing</p>
