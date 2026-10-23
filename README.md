@@ -67,4 +67,4 @@ published HTML round prompts; Markdown downloads remain linked from those pages.
 
 `npm run build` and focused built-page, store/image, sitemap and safe JSON checks pass.
 Preparation evidence is in [`docs/aeo-2026-10-23/`](docs/aeo-2026-10-23/).
-Independent review and live deployment verification remain pending with the lead.
+Independent Gemini4ArgonHigh review approved the actual diff. [PR3](https://github.com/tom-murton/ship-a-game-site/pull/3) is live at main `4ef3570d3d0a68e95eb307440010c9520329a032`; matching Cloudflare build `df078642-2838-41cb-a7d0-a5a47a5a669e` succeeded. All9 checked HTML pages match reviewed bytes/canonical/schema/body facts and the sitemap lists8 routes, excluding thanks/404. Search Console submission shows Success with8 discovered pages. See [production receipt](docs/aeo-2026-10-23/production.json). No indexing, citation or recommendation gain claimed.
