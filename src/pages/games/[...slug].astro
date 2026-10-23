@@ -10,9 +10,43 @@ export async function getStaticPaths() {
 const { game } = Astro.props;
 const { Content } = await render(game);
 const d = game.data;
+const reportUrl = new URL(`/games/${game.id}`, Astro.site).href;
+const reportId = `${reportUrl}#report`;
+const gameId = `${reportUrl}#game`;
+const absolute = (path: string) => new URL(path, Astro.site).href;
+// Frontmatter date is the game's release, not the report's publication date.
+// Intervention scores are benchmark results, never consumer ratings.
+const structuredData = [
+  {
+    '@type': 'Article', '@id': reportId, url: reportUrl,
+    headline: d.title, description: d.summary,
+    mainEntityOfPage: { '@id': `${reportUrl}#webpage` },
+    mainEntity: { '@id': gameId },
+    image: absolute(d.coverImage),
+    publisher: { '@id': 'https://weevolve.app/#publisher' },
+    about: [
+      { '@id': gameId },
+      ...[d.model, d.round2Model].filter(Boolean).map((name) => ({ '@type': 'SoftwareApplication', name })),
+    ],
+  },
+  {
+    '@type': 'VideoGame', '@id': gameId, name: d.title,
+    url: d.appStoreUrl, installUrl: d.appStoreUrl,
+    operatingSystem: 'iOS', gamePlatform: 'iOS',
+    image: absolute(d.coverImage), screenshot: d.screenshots.map(absolute),
+    subjectOf: { '@id': reportId },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Ship a Game', item: absolute('/') },
+      { '@type': 'ListItem', position: 2, name: d.title, item: reportUrl },
+    ],
+  },
+];
 ---
 
-<BaseLayout title={`${d.title} | Ship a Game`} description={d.summary}>
+<BaseLayout title={`${d.title} | Ship a Game`} description={d.summary} mainEntity={{ '@id': reportId }} structuredData={structuredData}>
   <article class="article">
     <header class="article-hero shell">
       <a class="back-link" href="/#games">← All games</a>

@@ -1,0 +1,117 @@
+{
+  "build": "pass; 0 errors, 0 warnings, 0 hints",
+  "htmlPageCount": 10,
+  "pages": [
+    {
+      "file": "dist/index.html",
+      "canonical": "https://shipagame.weevolve.app/",
+      "types": [
+        "Organization",
+        "WebSite",
+        "CollectionPage"
+      ]
+    },
+    {
+      "file": "dist/feedback.html",
+      "canonical": "https://shipagame.weevolve.app/feedback",
+      "types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ]
+    },
+    {
+      "file": "dist/404.html",
+      "canonical": "https://shipagame.weevolve.app/404",
+      "types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ]
+    },
+    {
+      "file": "dist/thanks.html",
+      "canonical": "https://shipagame.weevolve.app/thanks",
+      "types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ]
+    },
+    {
+      "file": "dist/prompt.html",
+      "canonical": "https://shipagame.weevolve.app/prompt",
+      "types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ]
+    },
+    {
+      "file": "dist/prompts/round-1.html",
+      "canonical": "https://shipagame.weevolve.app/prompts/round-1",
+      "types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ]
+    },
+    {
+      "file": "dist/prompts/round-2.html",
+      "canonical": "https://shipagame.weevolve.app/prompts/round-2",
+      "types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ]
+    },
+    {
+      "file": "dist/prompts/round-3.html",
+      "canonical": "https://shipagame.weevolve.app/prompts/round-3",
+      "types": [
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ]
+    },
+    {
+      "file": "dist/games/brinkball.html",
+      "canonical": "https://shipagame.weevolve.app/games/brinkball",
+      "types": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "Article",
+        "VideoGame",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "file": "dist/games/ringbloom.html",
+      "canonical": "https://shipagame.weevolve.app/games/ringbloom",
+      "types": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "Article",
+        "VideoGame",
+        "BreadcrumbList"
+      ]
+    }
+  ],
+  "sitemapUrls": [
+    "https://shipagame.weevolve.app/",
+    "https://shipagame.weevolve.app/games/brinkball",
+    "https://shipagame.weevolve.app/games/ringbloom",
+    "https://shipagame.weevolve.app/prompt",
+    "https://shipagame.weevolve.app/prompts/round-1",
+    "https://shipagame.weevolve.app/prompts/round-2",
+    "https://shipagame.weevolve.app/prompts/round-3",
+    "https://shipagame.weevolve.app/feedback"
+  ],
+  "reportProseAndFrontmatter": "unchanged SHA-256 against HEAD",
+  "gameStoreAndImageFacts": "match existing report frontmatter; images present",
+  "noInventedDatesAuthorsPricesRatings": "pass",
+  "rootRewriteBytes": "match index.html",
+  "serialization": "Actual BaseLayout serialization expression escapes script-closing input and round-trips JSON"
+}

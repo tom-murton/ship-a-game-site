@@ -4,18 +4,39 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  pageType?: 'WebPage' | 'CollectionPage';
+  mainEntity?: Record<string, unknown>;
+  structuredData?: Record<string, unknown>[];
 }
 
 const {
   title = 'Ship a Game | the real-world AI game benchmark',
   description = 'Frontier AI models research, build and improve real paid iOS games. Read the prompts, intervention scores and complete first-person reports.',
+  pageType = 'WebPage',
+  mainEntity,
+  structuredData = [],
 } = Astro.props;
-const canonicalPath = Astro.url.pathname === '/index.html'
-  ? '/'
-  : Astro.url.pathname.endsWith('.html')
-    ? `${Astro.url.pathname.slice(0, -5)}/`
-    : Astro.url.pathname;
-const canonical = new URL(canonicalPath, Astro.site);
+// File output and slash aliases all identify the same clean public route.
+const canonicalPath = Astro.url.pathname
+  .replace(/\/index\.html$/, '/')
+  .replace(/\.html$/, '')
+  .replace(/\/$/, '') || '/';
+const canonical = new URL(canonicalPath, Astro.site).href;
+const siteUrl = new URL('/', Astro.site).href;
+const websiteId = `${siteUrl}#website`;
+const publisherId = 'https://weevolve.app/#publisher';
+const data = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Organization', '@id': publisherId, name: 'WeEvolve', url: 'https://weevolve.app/' },
+    { '@type': 'WebSite', '@id': websiteId, url: siteUrl, name: 'Ship a Game', publisher: { '@id': publisherId }, inLanguage: 'en' },
+    { '@type': pageType, '@id': `${canonical}#webpage`, url: canonical, name: title, description, isPartOf: { '@id': websiteId }, publisher: { '@id': publisherId }, ...(mainEntity ? { mainEntity } : {}) },
+    ...structuredData,
+  ],
+};
+// Prevent content strings from closing the script element.
+const structuredJson = JSON.stringify(data).replace(/</g, '\\u003c');
+
 ---
 
 <!doctype html>
@@ -33,6 +54,7 @@ const canonical = new URL(canonicalPath, Astro.site);
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
+    <script is:inline type="application/ld+json" set:html={structuredJson} />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
